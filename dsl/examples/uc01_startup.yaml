@@ -1,0 +1,40 @@
+name: "UC-01 创业公司组网完整版"
+devices:
+  - name: R0
+    type: router
+    interfaces:
+      - {name: "Gig0/0", ip: "192.168.16.126", mask: 25}
+      - {name: "Gig0/1", ip: "10.0.0.1", mask: 30}
+      - {name: "Gig0/2", ip: "20.0.0.1", mask: 30}
+    routing:
+      protocol: rip
+      networks: ["192.168.16.0", "10.0.0.0", "20.0.0.0"]
+  - name: R1
+    type: router
+    interfaces:
+      - {name: "Gig0/0", ip: "10.0.0.2", mask: 30}
+      - {name: "Gig0/1", ip: "30.0.0.1", mask: 30}
+      - {name: "Gig0/2", ip: "20.0.0.2", mask: 30}
+    routing:
+      protocol: rip
+      networks: ["10.0.0.0", "20.0.0.0", "30.0.0.0"]
+  - name: R2
+    type: router
+    interfaces:
+      - {name: "Gig0/0", ip: "192.168.16.190", mask: 26}
+      - {name: "Gig0/1", ip: "30.0.0.2", mask: 30}
+    routing:
+      protocol: rip
+      networks: ["192.168.16.128", "30.0.0.0"]
+  - name: PC0
+    type: pc
+    interfaces:
+      - {name: "eth0", ip: "192.168.16.1", mask: 25, gateway: "192.168.16.126"}
+  - name: PC1
+    type: pc
+    interfaces:
+      - {name: "eth0", ip: "192.168.16.189", mask: 26, gateway: "192.168.16.190"}
+links:
+  - {a: "R0", b: "R1", a_intf: "Gig0/1", b_intf: "Gig0/0"}
+  - {a: "R1", b: "R2", a_intf: "Gig0/1", b_intf: "Gig0/1"}
+  - {a: "R0", b: "R2", a_intf: "Gig0/2", b_intf: "Gig0/2"}

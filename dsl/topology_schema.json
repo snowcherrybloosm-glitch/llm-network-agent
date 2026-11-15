@@ -1,0 +1,209 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "NetworkTopologyDSL",
+    "type": "object",
+    "required": [
+        "name",
+        "devices",
+        "links"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "devices": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "type"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "enum": [
+                            "router",
+                            "switch",
+                            "pc",
+                            "server"
+                        ]
+                    },
+                    "interfaces": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "name"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "ip": {
+                                    "type": "string",
+                                    "pattern": "^\\d+\\.\\d+\\.\\d+\\.\\d+$"
+                                },
+                                "mask": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 32
+                                },
+                                "gateway": {
+                                    "type": "string"
+                                },
+                                "vlan": {
+                                    "oneOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "const": "trunk"
+                                        }
+                                    ]
+                                },
+                                "shutdown": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    },
+                    "routing": {
+                        "type": "object",
+                        "properties": {
+                            "protocol": {
+                                "enum": [
+                                    "rip",
+                                    "ospf",
+                                    "bgp",
+                                    "static",
+                                    "none"
+                                ]
+                            },
+                            "process_id": {
+                                "type": "integer"
+                            },
+                            "areas": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            },
+                            "networks": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "bgp_as": {
+                                "type": "integer"
+                            },
+                            "neighbors": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "vlans": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "id",
+                                "name"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 4094
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "nat": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "napt",
+                                    "static",
+                                    "none"
+                                ]
+                            },
+                            "inside": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "outside": {
+                                "type": "string"
+                            },
+                            "pool": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "acl": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "action": {
+                                    "enum": [
+                                        "permit",
+                                        "deny"
+                                    ]
+                                },
+                                "protocol": {
+                                    "type": "string"
+                                },
+                                "src": {
+                                    "type": "string"
+                                },
+                                "dst": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "links": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "a",
+                    "b"
+                ],
+                "properties": {
+                    "a": {
+                        "type": "string"
+                    },
+                    "b": {
+                        "type": "string"
+                    },
+                    "a_intf": {
+                        "type": "string"
+                    },
+                    "b_intf": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

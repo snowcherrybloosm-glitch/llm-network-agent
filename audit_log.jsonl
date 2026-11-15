@@ -1,0 +1,7 @@
+{"timestamp": "2026-11-15T20:46:56.436463", "action": "WHITELIST_PASS", "content": "interface Gig0/0", "result": "", "context": "R0_test"}
+{"timestamp": "2026-11-15T20:46:56.437524", "action": "WHITELIST_PASS", "content": "ip address 192.168.1.1 255.255.255.0", "result": "", "context": "R0_test"}
+{"timestamp": "2026-11-15T20:46:56.437960", "action": "WHITELIST_PASS", "content": "no shutdown", "result": "", "context": "R0_test"}
+{"timestamp": "2026-11-15T20:46:56.438219", "action": "BLACKLIST_BLOCK", "content": "reload", "result": "设备重启命令被拦截", "context": "R0_test"}
+{"timestamp": "2026-11-15T20:46:56.439863", "action": "WHITELIST_BLOCK", "content": "ip route 0.0.0.0 0.0.0.0", "result": "不在白名单", "context": "R0_test"}
+{"timestamp": "2026-11-15T20:46:56.440418", "action": "BLACKLIST_BLOCK", "content": "write erase", "result": "配置擦除命令被拦截", "context": "R0_test"}
+{"timestamp": "2026-11-15T20:47:01.057847", "action": "MANUAL_CONFIRM", "content": "deploy to R0", "result": "rejected", "context": ""}
